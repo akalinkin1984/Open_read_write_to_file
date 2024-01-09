@@ -1,6 +1,6 @@
-def creating_dict(file):
+def creating_dict():
     cook_book = {}
-    with open(file, 'r') as f:
+    with open('recipes.txt', 'r') as f:
         for line in f:
             name = line.rstrip()
             count = int(f.readline())
@@ -16,5 +16,23 @@ def creating_dict(file):
     return cook_book
 
 
-path = 'recipes.txt'
-print(creating_dict(path))
+print(creating_dict())
+
+
+def get_shop_list_by_dishes(dishes: list, person_count: int):
+    result_dict = {}
+    cook_book = creating_dict()
+    for dish in dishes:
+        for value in cook_book[dish]:
+            ingredient = value['ingredient_name']
+            measure = value['measure']
+            quantity = value['quantity']
+            if ingredient in result_dict:
+                result_dict[ingredient]['quantity'] += quantity * person_count
+            else:
+                result_dict[ingredient] = {'measure': measure, 'quantity': quantity * person_count}
+
+    return result_dict
+
+
+print(get_shop_list_by_dishes(['Фахитос', 'Омлет'], 3))
